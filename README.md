@@ -8,7 +8,9 @@ npm install wxmp-qrcode
 
 ## 使用
 1. 创建一个canvas,设置其`id`,与`canvas-id`， 并设置canvas的样式，二维码基于其大小生成并居中
-`<canvas id="xxx" canvas-id="xxx"></canvas>`
+```html
+<canvas id="xxx" canvas-id="xxx"></canvas>
+```
 2. 引入包并使用
 ```javascript
 import QR from 'wxmp-qrcode'
