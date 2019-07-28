@@ -1,0 +1,8 @@
+canvas {
+  border: 1rpx solid #eee;
+  width: 400rpx;
+  height: 400rpx;
+}
+button {
+  margin-top: 100rpx;
+}

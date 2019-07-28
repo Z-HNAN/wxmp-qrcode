@@ -1,0 +1,5 @@
+<!--index.wxml-->
+<view class="container">
+  <canvas id="{{canvasId}}" canvas-id="{{canvasId}}"></canvas>
+  <button bindtap="creatQRCode"> 生成二维码 </button>
+</view>

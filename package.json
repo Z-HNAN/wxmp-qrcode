@@ -1,0 +1,22 @@
+{
+  "name": "wxmp-qrcode",
+  "version": "1.0.0",
+  "description": "QR Code Generator for wxmp",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Z-HNAN/wxmp-qrcode.git"
+  },
+  "keywords": [
+    "qrcode",
+    "wxmp"
+  ],
+  "author": "z-hnan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Z-HNAN/wxmp-qrcode/issues"
+  },
+  "homepage": "https://github.com/Z-HNAN/wxmp-qrcode#readme"
+}
