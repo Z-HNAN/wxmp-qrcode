@@ -1,6 +1,6 @@
 {
   "name": "wxmp-qrcode",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "QR Code Generator for wxmp",
   "main": "index.js",
   "scripts": {
