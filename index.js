@@ -709,14 +709,6 @@
       ecclevel = val;
     },
 
-    get size() {
-      return _size;
-    },
-
-    set size(val) {
-      _size = val
-    },
-
     get canvas() {
       return _canvas;
     },
