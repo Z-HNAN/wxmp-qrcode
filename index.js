@@ -809,8 +809,8 @@
      * @param {Object} callback 回调函数
      */
     draw: function (str, canvasId, $this, callback) {
-      let that = this
-      const query = wx.createSelectorQuery()
+      var that = this
+      var query = wx.createSelectorQuery()
       query.select('#' + canvasId).boundingClientRect()
       query.exec(function (res) {
         that._draw(str, canvasId, res[0].width, res[0].height, $this, callback)
