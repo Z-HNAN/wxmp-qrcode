@@ -9,12 +9,14 @@ npm install wxmp-qrcode
 ## 使用
 1. 创建一个canvas,设置其`id`,与`canvas-id`， 并设置canvas的样式，二维码基于其大小生成并居中
 ```html
-<canvas id="xxx" canvas-id="xxx"></canvas>
+<canvas id="cav-qrcode" canvas-id="cav-qrcode"></canvas>
 ```
 2. 引入包并使用
 ```javascript
 import QR from 'wxmp-qrcode'
-QR.api.draw(str, canvasId)
+QR.draw(str, canvasId, () => {
+  console.log('draw success!')  
+})
 ```
 
 ## api
@@ -22,10 +24,18 @@ QR.api.draw(str, canvasId)
 /**
  * 根据canvas尺寸，画出合适居中的qrcode
  * @param {Object} str 二维码的内容 (必须)
- * @param {Object} canvasId canvasId的值 （必须）
- * @param {Object} $this 传入组件的this,兼容在组件中生成二维码 （可选）
+ * @param {Object} canvasId canvasId的值 (必须)
+ * @param {Object} $this 传入组件的this,兼容在组件中生成二维码 （可选，可省略该参数）
+ * @param {Object} callback 回调函数 (可选)
  */
-draw: function (str, canvasId, $this) 
+draw: function (str, canvasId, $this, callback)
+
+/**
+* 清除canvas内容
+* @param {Object} canvasId canvasId (必须)
+* @param {Object} callback 回调函数 （可选）
+*/
+clear: function (canvasId, callback) 
 ```
 
 ## 注意
@@ -95,7 +105,7 @@ Page({
   creatQRCode () {
     let str = this.data.QRdata
     let canvasId = this.data.canvasId
-    QR.api.draw(str, canvasId)
+    QR.draw(str, canvasId)
   }
 })
 ```
@@ -131,7 +141,7 @@ export default {
     creatQRCode () {
       let str = this.QRdata
       let canvasId = this.canvasId
-      QR.api.draw(str, canvasId)
+      QR.draw(str, canvasId)
     }
   }
 }
@@ -185,7 +195,7 @@ export default class Index extends Component {
   createQRcode = () => {
     let canvasId = this.state.canvasId
     let QRdata = this.state.QRdata
-    QR.api.draw(QRdata, canvasId)
+    QR.draw(QRdata, canvasId)
   }
 
   render () {
