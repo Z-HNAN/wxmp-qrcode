@@ -828,6 +828,7 @@
       if (_canvasCache[canvas]) {
         var canvasObj = _canvasCache[canvas]
         canvasObj.ctx.clearRect(0, 0, canvasObj.cavW, canvasObj.cavW);
+        canvasObj.ctx.draw();
         callback && callback();
       }
     }
