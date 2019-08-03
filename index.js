@@ -817,6 +817,19 @@
       query.exec(function (res) {
         that._draw(str, canvasId, res[0].width, res[0].height, $this, callback)
       })
+    },
+
+    /**
+     * 清除canvas内容
+     * @param {Object} canvas canvasId
+     * @param {Object} callback 回调函数
+     */
+    clear: function (canvas, callback) {
+      if (_canvasCache[canvas]) {
+        var canvasObj = _canvasCache[canvas]
+        canvasObj.ctx.clearRect(0, 0, canvasObj.cavW, canvasObj.cavW);
+        callback && callback();
+      }
     }
   }
   module.exports = { api }
