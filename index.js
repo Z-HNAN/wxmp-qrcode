@@ -774,10 +774,17 @@
       str = that.utf16to8(str);
 
       var frame = that.getFrame(str),
-        // 组件中生成qrcode需要绑定this
-        ctx = wx.createCanvasContext(canvas, $this),
+        ctx,
         // px为绘制的小方块的大小
         px = Math.round(size / (width + 8));
+      // 进行ctx缓存
+      if (_canvasCache[canvas]) {
+        ctx = _canvasCache[canvas].ctx
+      } else {
+        // 组件中生成qrcode需要绑定this
+        ctx = wx.createCanvasContext(canvas,$this)
+        _canvasCache[canvas] = {ctx, canvasWidth, canvasHeight}
+      }
       var roundedSize = px * (width + 8),
         // 保持白色的画布铺满canvas
         offset = Math.floor((size - roundedSize) / 2),
