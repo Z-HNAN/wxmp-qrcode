@@ -697,6 +697,8 @@
 
   var _canvas = null;
 
+  var _canvasCache = {};
+
   var api = {
 
     get ecclevel() {
@@ -752,11 +754,12 @@
      * 在Canvas上画出QRCode
      * @param {Object} str 二维码的内容
      * @param {Object} canvas canvasId的值
-     * @param {Object} canvasWidth canvas尺寸，方背景（canvasWidth=宽=高）
+     * @param {Object} canvasWidth canvas尺寸，
+     * @param {Object} canvasHeight canvas尺寸，
      * @param {Object} $this 传入组件的this,兼容在组件中生成二维码
      * @param {Object} ecc ecc
      */
-    draw: function (str, canvas, canvasWidth, $this, ecc) {
+    _draw: function (str, canvas, canvasWidth, canvasHeight, $this, ecc) {
       var that = this;
       ecclevel = ecc || ecclevel;
       canvas = canvas || _canvas;
@@ -765,7 +768,7 @@
         return;
       }
 
-      var size = canvasWidth;
+      var size = Math.min(canvasWidth, canvasHeight);
       // 兼容中文显示
       str = that.utf16to8(str);
 
@@ -778,7 +781,8 @@
         // 保持白色的画布铺满canvas
         offset = Math.floor((size - roundedSize) / 2),
         // 保持QRcode在中间，计算偏移量 （画布宽度 - 二维码宽度）/ 2
-        offsetQR = Math.floor( (canvasWidth - px * (8 + width)) / 2 );
+        offsetWidthQR = Math.floor( (canvasWidth - px * (8 + width)) / 2 ),
+        offsetHeightQR = Math.floor( (canvasHeight - px * (8 + width)) / 2 );
       size = roundedSize;
       
       // 画白背景
@@ -790,31 +794,27 @@
       for (var i = 0; i < width; i++) {
         for (var j = 0; j < width; j++) {
           if (frame[j * width + i]) {
-            ctx.fillRect(px * (4 + i) + offsetQR, px * (4 + j) + offsetQR, px, px);
+            ctx.fillRect(px * (4 + i) + offsetWidthQR, px * (4 + j) + offsetHeightQR, px, px);
           }
         }
       }
       ctx.draw();
     },
+    
     /**
-     * 根据机型信息，画出最大尺寸的QRcode
+     * 根据canvas尺寸，画出合适居中的qrcode
      * @param {Object} str 二维码的内容
-     * @param {Object} canvas canvasId的值
+     * @param {Object} canvasId canvasId的值
      * @param {Object} $this 传入组件的this,兼容在组件中生成二维码
-     * @param {Object} ecc ecc
+     * @param {Object} callback 回调函数
      */
-    drawFullScreen: function (str, canvas, $this, ecc) {
-      try {
-        let res = wx.getSystemInfoSync()
-        // var scale = 750 / 686 // 不同屏幕下canvas的适配比例；设计稿是750宽
-        // var width = res.windowWidth / scale
-        // var height = width // canvas画布为正方形
-        let canvasWidth = Math.min(res.windowWidth, res.windowHeight) 
-        this.draw(str, canvas, canvasWidth, $this, ecc)
-      } catch (e) {
-        // Do something when catch error
-        console.log('获取设备信息失败' + e)
-      }
+    draw: function (str, canvasId, $this, callback) {
+      let that = this
+      const query = wx.createSelectorQuery()
+      query.select('#' + canvasId).boundingClientRect()
+      query.exec(function (res) {
+        that._draw(str, canvasId, res[0].width, res[0].height, $this, callback)
+      })
     }
   }
   module.exports = { api }
