@@ -16,7 +16,7 @@ export default class Index extends Component {
   createQRcode = () => {
     let canvasId = this.state.canvasId
     let QRdata = this.state.QRdata
-    QR.api.draw(QRdata, canvasId)
+    QR.draw(QRdata, canvasId)
   }
 
   render () {

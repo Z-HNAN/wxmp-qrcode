@@ -41,7 +41,7 @@
     "@tarojs/taro-weapp": "1.3.10",
     "nerv-devtools": "^1.4.0",
     "nervjs": "^1.4.0",
-    "wxmp-qrcode": "^0.0.4"
+    "wxmp-qrcode": "^2.0.0"
   },
   "devDependencies": {
     "@tarojs/plugin-babel": "1.3.10",

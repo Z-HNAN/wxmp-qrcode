@@ -8,6 +8,6 @@ Page({
   creatQRCode () {
     let str = this.data.QRdata
     let canvasId = this.data.canvasId
-    QR.api.draw(str, canvasId)
+    QR.draw(str, canvasId)
   }
 })

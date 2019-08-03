@@ -20,7 +20,7 @@ export default {
     creatQRCode () {
       let str = this.QRdata
       let canvasId = this.canvasId
-      QR.api.draw(str, canvasId)
+      QR.draw(str, canvasId)
     }
   }
 }
