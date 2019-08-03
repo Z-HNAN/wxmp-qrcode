@@ -757,12 +757,13 @@
      * @param {Object} canvasWidth canvas尺寸，
      * @param {Object} canvasHeight canvas尺寸，
      * @param {Object} $this 传入组件的this,兼容在组件中生成二维码
-     * @param {Object} ecc ecc
+     * @param {Object} callback 回调函数
      */
-    _draw: function (str, canvas, canvasWidth, canvasHeight, $this, ecc) {
+    _draw: function (str, canvas, canvasWidth, canvasHeight, $this, callback) {
       var that = this;
-      ecclevel = ecc || ecclevel;
       canvas = canvas || _canvas;
+      // 更改指向
+      callback = typeof $this === 'function' ? $this : callback;
       if (!canvas) {
         console.warn('No canvas provided to draw QR code in!')
         return;
@@ -799,8 +800,9 @@
         }
       }
       ctx.draw();
+      callback && callback();
     },
-    
+
     /**
      * 根据canvas尺寸，画出合适居中的qrcode
      * @param {Object} str 二维码的内容
