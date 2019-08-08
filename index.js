@@ -741,17 +741,18 @@
       }
       return out;
     },
-    
+
     /**
      * 在Canvas上画出QRCode
      * @param {Object} str 二维码的内容
      * @param {Object} canvas canvasId的值
+     * @param {Object} canvasCacheId 用作缓存的ID值，和webView有关的值
      * @param {Object} canvasWidth canvas尺寸，
      * @param {Object} canvasHeight canvas尺寸，
      * @param {Object} $this 传入组件的this,兼容在组件中生成二维码
      * @param {Object} callback 回调函数
      */
-    _draw: function (str, canvas, canvasWidth, canvasHeight, $this, callback) {
+    _draw: function (str, canvas, canvasCacheId, canvasWidth, canvasHeight, $this, callback) {
       var that = this;
       canvas = canvas || _canvas;
       // 更改指向
@@ -770,12 +771,12 @@
         // px为绘制的小方块的大小
         px = Math.round(size / (width + 8));
       // 进行ctx缓存
-      if (_canvasCache[canvas]) {
-        ctx = _canvasCache[canvas].ctx
+      if (_canvasCache[canvasCacheId]) {
+        ctx = _canvasCache[canvasCacheId].ctx
       } else {
         // 组件中生成qrcode需要绑定this
         ctx = wx.createCanvasContext(canvas,$this)
-        _canvasCache[canvas] = {ctx, canvasWidth, canvasHeight}
+        _canvasCache[canvasCacheId] = {ctx, canvasWidth, canvasHeight}
       }
       var roundedSize = px * (width + 8),
         // 保持白色的画布铺满canvas
@@ -784,11 +785,11 @@
         offsetWidthQR = Math.floor( (canvasWidth - px * (8 + width)) / 2 ),
         offsetHeightQR = Math.floor( (canvasHeight - px * (8 + width)) / 2 );
       size = roundedSize;
-      
+
       // 画白背景
       ctx.setFillStyle('#ffffff')
       ctx.fillRect(0 + offset, 0 + offset, canvasWidth, canvasWidth);
-      
+
       // 画二维码颗粒
       ctx.setFillStyle('#000000');
       for (var i = 0; i < width; i++) {
@@ -813,8 +814,11 @@
       var that = this
       var query = wx.createSelectorQuery()
       query.select('#' + canvasId).boundingClientRect()
+      /* canvasId 要加入webviewId 字段， 防止页面栈变化，缓存不正确*/
+      var _webviewId = query._defaultComponent.__wxWebviewId__
+      var canvasCacheId = canvasId + _webviewId
       query.exec(function (res) {
-        that._draw(str, canvasId, res[0].width, res[0].height, $this, callback)
+        that._draw(str, canvasId, canvasCacheId, res[0].width, res[0].height, $this, callback)
       })
     },
 
@@ -824,8 +828,12 @@
      * @param {Object} callback 回调函数
      */
     clear: function (canvas, callback) {
-      if (_canvasCache[canvas]) {
-        var canvasObj = _canvasCache[canvas]
+      var query = wx.createSelectorQuery()
+      /* canvasId 要加入webviewId 字段， 防止页面栈变化，缓存不正确*/
+      var _webviewId = query._defaultComponent.__wxWebviewId__
+      var canvasCacheId = canvas + _webviewId
+      if (_canvasCache[canvasCacheId]) {
+        var canvasObj = _canvasCache[canvasCacheId]
         canvasObj.ctx.clearRect(0, 0, canvasObj.cavW, canvasObj.cavW);
         canvasObj.ctx.draw();
         callback && callback();
