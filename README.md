@@ -54,7 +54,7 @@ clear: function (canvasId, callback)
   - bug: 该方法有时保存的图片会有一个竖条。
 ```javascript
 createQrCode: function (content, canvasId) {
-  QR.api.draw(content, canvasId)
+  QR.draw(content, canvasId)
   this.canvasToTempImage(canvasId)
 },
 
