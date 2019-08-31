@@ -23,17 +23,17 @@ QR.draw(str, canvasId, () => {
 ```javscript
 /**
  * 根据canvas尺寸，画出合适居中的qrcode
- * @param {Object} str 二维码的内容 (必须)
- * @param {Object} canvasId canvasId的值 (必须)
+ * @param {String} str 二维码的内容 (必须)
+ * @param {String} canvasId canvasId的值 (必须)
  * @param {Object} $this 传入组件的this,兼容在组件中生成二维码 （可选，可省略该参数）
- * @param {Object} callback 回调函数 (可选)
+ * @param {Function} callback 回调函数 (可选)
  */
 draw: function (str, canvasId, $this, callback)
 
 /**
 * 清除canvas内容
-* @param {Object} canvasId canvasId (必须)
-* @param {Object} callback 回调函数 （可选）
+* @param {String} canvasId canvasId (必须)
+* @param {Function} callback 回调函数 （可选）
 */
 clear: function (canvasId, callback) 
 ```
