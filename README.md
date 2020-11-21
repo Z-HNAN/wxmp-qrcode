@@ -1,3 +1,5 @@
+> 有一些已知问题，可能会后面修复，可以先试试另外一个小库https://github.com/yingye/weapp-qrcode 还不错
+
 # wxmp-qrcode
 适用于微信小程序的二维码生成器，基于Canvas生成，支持中文的输入。可在原生小程序，mpvue，taro中使用。
 ![qrcode](/doc/img/qrcode.png)
